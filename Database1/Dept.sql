@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Dept]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Code] NCHAR(10) NOT NULL, 
+    [DeptLevelId] UNIQUEIDENTIFIER NOT NULL, 
+    [ParentId] NCHAR(10) NULL
+)

@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[DeptLevel]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Code] NVARCHAR(50) NOT NULL, 
+    [Index] INT NOT NULL
+)
