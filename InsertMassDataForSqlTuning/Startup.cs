@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InsertMassDataForSqlTuning.Controllers;
+using InsertMassDataForSqlTuning.EF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -30,6 +32,12 @@ namespace InsertMassDataForSqlTuning
             services.AddScoped<DeptGenerator>();
             services.AddScoped<DeptLevelGenerator>();
             services.AddScoped<GenerateRepository>();
+
+            services.AddDbContext<DefaultContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                                                                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                                                                    .EnableDetailedErrors());
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

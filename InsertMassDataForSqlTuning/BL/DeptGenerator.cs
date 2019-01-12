@@ -10,17 +10,21 @@ namespace InsertMassDataForSqlTuning.Controllers
         private readonly int _deptsPerLevel;
 
         private char _deptCodePrefix;
+        private int _deptSerialNo;
+        private int _deptLevelSerialNo;
 
         public DeptGenerator()
         {
             _deptsPerLevel  = 2;
             _deptCodePrefix = 'A';
+            _deptSerialNo = 0;
+            _deptLevelSerialNo = 0;
         }
 
-        public List<DeptDTO> GetAllDepartments(DeptLevelDTO[] deptLevels)
+        public List<Dept> GetAllDepartments(DeptLevel[] deptLevels)
         {
-            var result      = new List<DeptDTO>();
-            var parentDepts = new List<DeptDTO>();
+            var result      = new List<Dept>();
+            var parentDepts = new List<Dept>();
 
             foreach ( var deptLevel in deptLevels )
             {
@@ -33,13 +37,13 @@ namespace InsertMassDataForSqlTuning.Controllers
             return result;
         }
 
-        private List<DeptDTO> GetRootDepts(DeptLevelDTO deptLevel)
+        private List<Dept> GetRootDepts(DeptLevel deptLevel)
         {
-            var result = new List<DeptDTO>
+            var result = new List<Dept>
             {
-                new DeptDTO
+                new Dept
                 {
-                    Id          = new Guid($"D0000000-0000-0000-00{deptLevel.Index:00}-0000000000{1:00}")
+                    Id          = new Guid($"D0000000-00{deptLevel.Index:00}-0000-0000-{_deptSerialNo++:000000000000}")
                   , Code        = $"{_deptCodePrefix}{1:0000}"
                   , DeptLevelId = deptLevel.Id
                 }
@@ -47,7 +51,7 @@ namespace InsertMassDataForSqlTuning.Controllers
             return result;
         }
 
-        private List<DeptDTO> GenerateDepts(DeptLevelDTO deptLevel, List<DeptDTO> parentDepts)
+        private List<Dept> GenerateDepts(DeptLevel deptLevel, List<Dept> parentDepts)
         {
             if ( deptLevel.Index == 0 )
             {
@@ -58,10 +62,10 @@ namespace InsertMassDataForSqlTuning.Controllers
             var result = parentDepts.SelectMany(pd => Enumerable.Range(1, _deptsPerLevel)
                                                                 .Select(i =>
                                                                  {
-                                                                     var dept = new DeptDTO
+                                                                     var dept = new Dept
                                                                      {
-                                                                         Id          = new Guid($"D0000000-0000-0000-00{deptLevel.Index:00}-0000000000{i:00}")
-                                                                       , Code        = $"{_deptCodePrefix}{i:0000}"
+                                                                         Id          = new Guid($"D0000000-00{deptLevel.Index:00}-0000-0000-{_deptSerialNo:000000000000}")
+                                                                       , Code        = $"{_deptCodePrefix}{_deptSerialNo++:000000}"
                                                                        , DeptLevelId = deptLevel.Id
                                                                        , ParentId    = pd.Id
                                                                      };

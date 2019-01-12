@@ -4,7 +4,7 @@ namespace InsertMassDataForSqlTuning.DTOs
 {
     public class InsertBoxDTO
     {
-        public DeptLevelDTO[] DeptLevels  { get; set; }
-        public List<DeptDTO>  Departments { get; set; }
+        public DeptLevel[] DeptLevels  { get; set; }
+        public List<Dept>  Departments { get; set; }
     }
 }

@@ -62,4 +62,7 @@
     <Build Include="DeptLevel.sql" />
     <Build Include="Dept.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="DB.publish.xml" />
+  </ItemGroup>
 </Project>
