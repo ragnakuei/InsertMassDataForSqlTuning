@@ -43,8 +43,8 @@ namespace InsertMassDataForSqlTuning.Controllers
             {
                 new Dept
                 {
-                    Id          = new Guid($"D0000000-00{deptLevel.Index:00}-0000-0000-{_deptSerialNo++:000000000000}")
-                  , Code        = $"{_deptCodePrefix}{1:0000}"
+                    Id          = new Guid($"A0000000-00{deptLevel.Index:00}-0000-0000-{_deptSerialNo:000000000000}")
+                  , Code        = $"{_deptCodePrefix}{_deptSerialNo++:000000}"
                   , DeptLevelId = deptLevel.Id
                 }
             };
@@ -59,12 +59,13 @@ namespace InsertMassDataForSqlTuning.Controllers
                 return parentDepts;
             }
 
-            var result = parentDepts.SelectMany(pd => Enumerable.Range(1, _deptsPerLevel)
+            var result = parentDepts.SelectMany(pd => 
+                                                    Enumerable.Range(1, _deptsPerLevel)
                                                                 .Select(i =>
                                                                  {
                                                                      var dept = new Dept
                                                                      {
-                                                                         Id          = new Guid($"D0000000-00{deptLevel.Index:00}-0000-0000-{_deptSerialNo:000000000000}")
+                                                                         Id          = new Guid($"A0000000-00{deptLevel.Index:00}-0000-0000-{_deptSerialNo:000000000000}")
                                                                        , Code        = $"{_deptCodePrefix}{_deptSerialNo++:000000}"
                                                                        , DeptLevelId = deptLevel.Id
                                                                        , ParentId    = pd.Id

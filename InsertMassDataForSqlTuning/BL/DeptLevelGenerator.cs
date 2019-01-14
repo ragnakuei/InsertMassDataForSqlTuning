@@ -18,7 +18,7 @@ namespace InsertMassDataForSqlTuning.Controllers
             return Enumerable.Range(generateService.FirstDeptLevelIndex, _deptLevelCount)
                              .Select(i => new DeptLevel
                               {
-                                  Id    = new Guid($"00000000-0000-0000-0000-0000000000{i:00}")
+                                  Id    = new Guid($"d0000000-0000-0000-0000-0000000000{i:00}")
                                 , Code  = $"A{i:00}"
                                 , Index = i
                               })
